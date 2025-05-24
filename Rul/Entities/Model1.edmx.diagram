@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fd622fc0198e4718ad3210c9c77a93f1" Name="Diagram1">
+        <EntityTypeShape EntityType="mssql_script_tradeModel.Order" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.OrderProduct" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.PickupPoint" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.Product" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.Role" Width="1.5" PointX="5.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="mssql_script_tradeModel.User" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="mssql_script_tradeModel.FK__OrderProd__Order__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="mssql_script_tradeModel.FK_Order_PickupPoint" ManuallyRouted="false" />
+        <AssociationConnector Association="mssql_script_tradeModel.FK__OrderProd__Produ__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="mssql_script_tradeModel.FK__User__UserRole__440B1D61" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
