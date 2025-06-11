@@ -75,33 +75,88 @@ namespace Rul.Pages
             "15% и более",
         };
 
+        //private void UpdateData()
+        //{
+        //    var result = mssql_script_tradeEntities.GetContext().Product.ToList();
+        //    var search = txtSearch.Text.ToLower();
+        //    if (cmbSorting.SelectedIndex == 1)
+        //        result = result.OrderBy(p => p.ProductCost).ToList();
+        //    if (cmbSorting.SelectedIndex == 2)
+        //        result = result.OrderByDescending(p => p.ProductCost).ToList();
+
+
+        //    if (cmbFilter.SelectedIndex == 1)
+        //        result = result.Where(p => p.ProductDiscountAmount >= 0 && p.ProductDiscountAmount < 10).ToList();
+        //    if (cmbFilter.SelectedIndex == 2)
+        //        result = result.Where(p => p.ProductDiscountAmount >= 10 && p.ProductDiscountAmount < 15).ToList();
+        //    if (cmbFilter.SelectedIndex == 3)
+        //        result = result.Where(p => p.ProductDiscountAmount >= 15).ToList();
+
+
+        //    result = result.Where(p => p.ProductName.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+        //    LViewProduct.ItemsSource = result;
+
+        //    txtResultAmount.Text = result.Count().ToString();
+
+
+        //}
+
+
         private void UpdateData()
         {
+            //db = new mssql_script_tradeEntities();
             var result = mssql_script_tradeEntities.GetContext().Product.ToList();
-            var search = txtSearch.Text.ToLower();
-            if (cmbSorting.SelectedIndex == 1)
-                result = result.OrderBy(p => p.ProductCost).ToList();
-            if (cmbSorting.SelectedIndex == 2)
-                result = result.OrderByDescending(p => p.ProductCost).ToList();
+
+            if (LViewProduct == null)
+            {
+                return;
+            }
+
+            // Поиск
+            string searchText = txtSearch.Text.ToLower();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                result = result
+                    .Where(p => p.ProductName.ToLower().Contains(searchText) ||
+                               p.ProductDescription.ToLower().Contains(searchText) ||
+                               p.ProductManufacturer.ToLower().Contains(searchText))
+                    .ToList();
+            }
+            switch (cmbSorting.SelectedIndex)
+            {
+                case 1:
+                    result = result.OrderBy(p => p.ProductCost).ToList();
+                    break;
+                case 2:
+                    result = result.OrderByDescending(p => p.ProductCost).ToList();
+                    break;
+            }
+            // Фильтрация по скидке - ИСПРАВЛЕНО
+            switch (cmbFilter.SelectedIndex)
+            {
+                case 1: // 0%-9,99%
+                    result = result.Where(p => p.ProductDiscountAmount >= 0 && p.ProductDiscountAmount < 10).ToList();
+                    break;
+
+                case 2: // 10%-14,99%
+                    MessageBox.Show("2");
+                    result = result.Where(p => p.ProductDiscountAmount >= 10 && p.ProductDiscountAmount < 15).ToList();
+                    break;
+                case 3: // 15% и более
+                    MessageBox.Show("3");
+
+                    result = result.Where(p => p.ProductDiscountAmount >= 15).ToList(); // Убрана сортировка, оставлена только фильтрация
+                    break;
+            }
+
+            // Сортировка
 
 
-            if (cmbFilter.SelectedIndex == 1)
-                result = result.Where(p => p.ProductDiscountAmount >= 0 && p.ProductDiscountAmount < 10).ToList();
-            if (cmbFilter.SelectedIndex == 2)
-                result = result.Where(p => p.ProductDiscountAmount >= 10 && p.ProductDiscountAmount < 15).ToList();
-            if (cmbFilter.SelectedIndex == 3)
-                result = result.Where(p => p.ProductDiscountAmount >= 15).ToList();
-
-
-            result = result.Where(p => p.ProductName.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
+            // Обновляем интерфейс
             LViewProduct.ItemsSource = result;
-
-            txtResultAmount.Text = result.Count().ToString();
-
-
+            txtResultAmount.Text = result.Count.ToString();
+            txtAllAmount.Text = mssql_script_tradeEntities.GetContext().Product.Count().ToString();
         }
-
-
 
 
         private void cmbFilter_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -210,7 +265,7 @@ namespace Rul.Pages
 
         private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            UpdateData();
         }
     }
 }

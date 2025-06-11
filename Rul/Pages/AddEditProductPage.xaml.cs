@@ -258,5 +258,10 @@ namespace Rul.Pages
             }
 
         }
+
+        private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

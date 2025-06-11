@@ -1,34 +1,56 @@
 ﻿using Rul.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
+using System.Windows.Media.Effects;
+using System.Text;
+using System.Linq;
+using WpfApp1.Services;
 
 namespace Rul.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Autho.xaml
-    /// </summary>
     public partial class Autho : Page
     {
+        private int failedAttempts = 0;
+        private DispatcherTimer blockTimer;
+        private string currentCaptcha;
+        private const int BLOCK_TIME_SECONDS = 10;
 
-        private int countUnsuccesful = 0;
         public Autho()
         {
             InitializeComponent();
+            blockTimer = new DispatcherTimer();
+            blockTimer.Interval = TimeSpan.FromSeconds(1);
+            blockTimer.Tick += BlockTimer_Tick;
+        }
 
-            TextBlockCatcha.Visibility = Visibility.Hidden;
-            txtCaptcha.Visibility = Visibility.Hidden;
+        private void BlockTimer_Tick(object sender, EventArgs e)
+        {
+            if (blockTimer.Tag is int timeLeft)
+            {
+                timeLeft--;
+                blockTimer.Tag = timeLeft;
+                tbTimeLeft.Text = $"Подождите {timeLeft} секунд перед следующей попыткой";
+
+                if (timeLeft <= 0)
+                {
+                    blockTimer.Stop();
+                    tbTimeLeft.Visibility = Visibility.Collapsed;
+                    EnableInputs(true);
+                }
+            }
+        }
+
+        private void EnableInputs(bool enable)
+        {
+            txtLogin.IsEnabled = enable;
+            txtPassword.IsEnabled = enable;
+            btnEnter.IsEnabled = enable;
+            btnEnterGuest.IsEnabled = enable;
+            txtCaptcha.IsEnabled = enable;
         }
 
         private void btnEnterGuest_Click(object sender, RoutedEventArgs e)
@@ -38,134 +60,76 @@ namespace Rul.Pages
 
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
-            //countUnsuccesful++;
-
-            string password = txtPassword.Text.Trim();
             string login = txtLogin.Text.Trim();
-            User user = new User();
+            string password = txtPassword.Password.Trim();
 
-            user = mssql_script_tradeEntities.GetContext().User.Where(p => p.UserLogin == login && p.UserPassword == password).FirstOrDefault();
-            //MessageBox.Show(user.UserLogin, user.UserPassword);
-            int userCount = mssql_script_tradeEntities.GetContext().User.Where(p => p.UserLogin == login && p.UserPassword == password).Count();
-            if (countUnsuccesful < 1)
+            if (failedAttempts >= 1 && captchaPanel.Visibility == Visibility.Visible)
             {
-                if (userCount > 0)
+                if (txtCaptcha.Text.Trim() != currentCaptcha)
                 {
-                    MessageBox.Show("Вы вошли под:" + user.Role.RoleName.ToString());
-                    LoadForm(user.Role.RoleName.ToString(), user);
-
+                    MessageBox.Show("Неверная CAPTCHA!");
+                    BlockUser();
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("Вы ввели неверно логин или пароль!");
-                    countUnsuccesful++;
-                    if (countUnsuccesful == 1)
-                        GenerateCaptha();
-
-                }
-
             }
-            else 
+
+            var user = mssql_script_tradeEntities.GetContext().User
+                .FirstOrDefault(p => p.UserLogin == login && p.UserPassword == password);
+
+            if (user != null)
             {
-                //GenerateCaptha();
-                //if (user != null && txtCaptcha.Text.Trim()  == TextBlockCatcha.Text.Trim())
-                //{
-                //    MessageBox.Show("Вы вошли под:" + user.Role.RoleName.ToString());
-                //    LoadForm(user.Role.RoleName.ToString(), user);
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Введите данные заново!");
+                failedAttempts = 0;
+                captchaPanel.Visibility = Visibility.Collapsed;
+                MessageBox.Show($"Вы вошли как: {user.Role.RoleName}");
+                LoadForm(user.Role.RoleName, user);
+            }
+            else
+            {
+                failedAttempts++;
+                MessageBox.Show("Неверный логин или пароль!");
 
-                //}
-
-                if (userCount>0&&TextBlockCatcha.Text==txtCaptcha.Text)
+                if (failedAttempts >= 1)
                 {
-                    MessageBox.Show("Вы вошли под:" + user.Role.RoleName.ToString());
-
-                    LoadForm(user.Role.RoleName.ToString(), user);
-
+                    GenerateCaptcha();
+                    captchaPanel.Visibility = Visibility.Visible;
                 }
-                else
-                {
-                    MessageBox.Show("Введите данные заново!");
-
-                }
-                //if (true)
-                //{
-
-                ////}
-                //if (userCount > 0)
-                //{
-
-
-
-                //    MessageBox.Show("Вы вошли под:" + user.Role.RoleName.ToString());
-                //    LoadForm(user.Role.RoleName.ToString());
-
-                //}
-                //else
-                //{
-                //    MessageBox.Show("Введите данные заново!");
-                //}
-
-
             }
         }
 
-        private void GenerateCaptha()
+        private void GenerateCaptcha()
         {
-
-            txtLogin.Clear();
-            txtPassword.Clear();
-            txtCaptcha.Clear();
-            txtCaptcha.Visibility = Visibility.Visible;
-            TextBlockCatcha.Visibility = Visibility.Visible;
-            Random random = new Random();
-
-            int randNum = random.Next(0, 3);
-
-            switch (randNum)
-            {
-                //default:
-                //    break;
-
-
-                case 1:
-
-                    TextBlockCatcha.Text = "ju2sT8Cbs";
-                    TextBlockCatcha.TextDecorations = TextDecorations.Strikethrough;
-                    break;
-
-                case 2:
-                    TextBlockCatcha.Text = "iNwk2cl";
-                    TextBlockCatcha.TextDecorations = TextDecorations.Strikethrough;
-                    break;
-
-                case 3:
-                    TextBlockCatcha.Text = "uOozGk95";
-                    TextBlockCatcha.TextDecorations = TextDecorations.Strikethrough;
-                    break;
-            }
-
+            // Generate random 4-character CAPTCHA
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            currentCaptcha = CapthchaGenerator.GenerateCaptchaText(4);
+            capthcaImage.Text=currentCaptcha;
+          
         }
 
-        private void LoadForm(string _role, User user)
+        private void BlockUser()
         {
-            switch (_role)
+            EnableInputs(false);
+            tbTimeLeft.Visibility = Visibility.Visible;
+            blockTimer.Tag = BLOCK_TIME_SECONDS;
+            tbTimeLeft.Text = $"Подождите {BLOCK_TIME_SECONDS} секунд перед следующей попыткой";
+            blockTimer.Start();
+            GenerateCaptcha(); // Generate new CAPTCHA after block
+        }
+
+        private void LoadForm(string role, User user)
+        {
+            switch (role)
             {
-                //default:
-                //     break;
                 case "Клиент":
                     NavigationService.Navigate(new Client(user));
-                    break;      
+                    break;
                 case "Менеджер":
                     NavigationService.Navigate(new Client(user));
                     break;
                 case "Адинистратор":
                     NavigationService.Navigate(new Admin(user));
                     break;
-
+              
             }
         }
     }

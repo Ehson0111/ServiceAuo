@@ -28,6 +28,7 @@ namespace Rul.Entities
         public string ProductManufacturer { get; set; }
         public decimal ProductCost { get; set; }
         public Nullable<byte> ProductDiscountAmount { get; set; }
+        //public decimal ProductDiscountAmount { get; set; }
         public int ProductQuantityInStock { get; set; }
         public string ProductStatus { get; set; }
         public string Unit { get; set; }
@@ -49,9 +50,6 @@ namespace Rul.Entities
                 if (this.ProductDiscountAmount > 15)
                     return "#7fff00";
                 return "#fff";
-
-
-
             }
         }
 

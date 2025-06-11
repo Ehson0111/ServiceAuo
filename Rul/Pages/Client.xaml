@@ -37,7 +37,7 @@
 
         <TextBox Name="txtSearch" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="txtSearch_SelectionChanged"/>
         <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5,0,5,0" SelectionChanged="cmbSorting_SelectionChanged" ItemsSource="{Binding SortingList}"/>
-        <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5,0,5,0" VerticalAlignment="Center" ItemsSource="{Binding FilterList}" SelectionChanged="cmbFilter_SelectionChanged_1"/>
+        <ComboBox Name="cmmbfilter" Grid.Row="1" Grid.Column="2" SelectedIndex="0" Margin="5,0,5,0" VerticalAlignment="Center" ItemsSource="{Binding FilterList}" SelectionChanged="cmmbfilter_SelectionChanged"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="txtResultAmount" />
             <TextBlock Text="из"/>

@@ -56,7 +56,7 @@
                 <TextBox  Name="txtMaxDiscountAmount" Text="{Binding MaxDiscountAmount}"/>
 
                 <TextBlock Text="Размер действующей скидки:"/>
-                <TextBox  Name="txtDiscount" Text="{Binding MaxDiscountAmount}"/>
+                <TextBox  Name="txtDiscount" Text="{Binding ProductDiscountAmount}" TextChanged="txtDiscount_TextChanged"/>
 
                 <TextBlock Text="Стоимость за единицу:"/>
                 <TextBox  Name="txtCost" Text="{Binding ProductCost}"/>
