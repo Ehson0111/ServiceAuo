@@ -23,13 +23,16 @@ namespace Rul.Pages
     public partial class OrderPage : Page
     {
         List<Product> productList = new List<Product>();
+        int userid;
         public OrderPage(List<Product> products, User user)
         {
             InitializeComponent();
             //DataContext = this;
             //lViewOrder.ItemsSource = productList;       
-            //DataContext = this;
+            //DataC
+            //ontext = this;
 
+            userid=user.UserID;
             DataContext = this;
             productList=products;
 
@@ -101,13 +104,14 @@ namespace Rul.Pages
             {
                 Order neworder = new Order()
                 {
-                    OrderStatus = "Новый",
+                    OrderStatusId=1,
                     OrderDate = DateTime.Now,
                     OrderPickupPoint = cmbPickupPoint.SelectedIndex + 1,
                     OrderDeliveryDate = date,   
                                         ReceiotCode=random.Next(100, 1000),
 
-                    ClientFullName=txtUser.Text,    
+                    //User.=txtUser.Text,    
+                    UserId=userid,
 
                 };
 

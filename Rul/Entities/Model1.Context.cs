@@ -19,7 +19,11 @@ namespace Rul.Entities
             : base("name=mssql_script_tradeEntities")
         {
         }
-
+    
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            throw new UnintentionalCodeFirstException();
+        }
         private static mssql_script_tradeEntities context;
 
         public static mssql_script_tradeEntities GetContext()
@@ -30,13 +34,9 @@ namespace Rul.Entities
 
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            throw new UnintentionalCodeFirstException();
-        }
-    
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderProduct> OrderProduct { get; set; }
+        public virtual DbSet<OrderStatus> OrderStatus { get; set; }
         public virtual DbSet<PickupPoint> PickupPoint { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Role> Role { get; set; }

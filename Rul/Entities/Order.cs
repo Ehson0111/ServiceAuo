@@ -21,17 +21,17 @@ namespace Rul.Entities
         }
     
         public int OrderID { get; set; }
-        public string OrderStatus { get; set; }
         public System.DateTime OrderDeliveryDate { get; set; }
         public int OrderPickupPoint { get; set; }
         public System.DateTime OrderDate { get; set; }
-        public string ClientFullName { get; set; }
         public int ReceiotCode { get; set; }
+        public Nullable<int> OrderStatusId { get; set; }
+        public Nullable<int> UserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
         public virtual PickupPoint PickupPoint { get; set; }
-       
-
+        public virtual User User { get; set; }
     }
 }

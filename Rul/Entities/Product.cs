@@ -11,8 +11,7 @@ namespace Rul.Entities
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-
+    
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -41,10 +40,13 @@ namespace Rul.Entities
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
 
 
-        public string Background {
 
-            get {
-                if (this.ProductDiscountAmount>15)
+        public string Background
+        {
+
+            get
+            {
+                if (this.ProductDiscountAmount > 15)
                     return "#7fff00";
                 return "#fff";
 
@@ -55,11 +57,12 @@ namespace Rul.Entities
 
         public string CostWithDiscount
         {
-            get {
+            get
+            {
 
-                if (this.MaxDiscountAmount>0)
+                if (this.MaxDiscountAmount > 0)
                 {
-                    var costWithDiscount=Convert.ToDouble(this.ProductCost)-Convert.ToDouble(this.ProductCost)*Convert.ToDouble(this.ProductDiscountAmount/100.00);
+                    var costWithDiscount = Convert.ToDouble(this.ProductCost) - Convert.ToDouble(this.ProductCost) * Convert.ToDouble(this.ProductDiscountAmount / 100.00);
                 }
 
                 return this.ProductCost.ToString();
@@ -68,17 +71,17 @@ namespace Rul.Entities
 
         public string ImgPath
         {
-            get {
+
+            get
+            {
+
                 var path = "pack://application:,,,/Resources/" + this.ProductImage;
                 return path;
-            
+
             }
-        
+
         }
-
-
-
-
+        
 
     }
 }

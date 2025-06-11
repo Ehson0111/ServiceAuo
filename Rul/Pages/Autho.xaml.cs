@@ -158,6 +158,12 @@ namespace Rul.Pages
                 //     break;
                 case "Клиент":
                     NavigationService.Navigate(new Client(user));
+                    break;      
+                case "Менеджер":
+                    NavigationService.Navigate(new Client(user));
+                    break;
+                case "Адинистратор":
+                    NavigationService.Navigate(new Admin(user));
                     break;
 
             }

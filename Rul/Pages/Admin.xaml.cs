@@ -1,4 +1,5 @@
 ﻿using Rul.Entities;
+using Rul.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,50 +14,44 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Xaml;
-
-using Rul.Entities;
-using Rul.Windows;
 
 namespace Rul.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Client.xaml
+    /// Логика взаимодействия для Admin.xaml
     /// </summary>
-    public partial class Client : Page
+    public partial class Admin : Page
     {
         User user = new User();
-        public Client(User Currentuser)
+        public Admin(User Currentuser)
         {
             InitializeComponent();
-
             var product = mssql_script_tradeEntities.GetContext().Product.ToList();
 
             LViewProduct.ItemsSource = product;
-            user=Currentuser;
+            user = Currentuser;
             DataContext = this;
 
-            txtAllAmount.Text =product.Count().ToString();   
+            txtAllAmount.Text = product.Count().ToString();
             UpdateData();
 
             User();
-
         }
+        List<Product> orderProducts = new List<Product>();
 
-        List<Product> orderProducts=new List<Product>();
 
-        
-        private void User() {
+        private void User()
+        {
 
-            if (user!=null)
+            if (user != null)
             {
-                txtFullname.Text=user.UserSurname.ToString()+user.UserName.ToString()+" "+user.UserPatronymic.ToString();
+                txtFullname.Text = user.UserSurname.ToString() + user.UserName.ToString() + " " + user.UserPatronymic.ToString();
             }
             else
             {
                 txtFullname.Text = "Гость";
             }
-                  
+
         }
 
         private void LViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -82,9 +77,7 @@ namespace Rul.Pages
 
         private void UpdateData()
         {
-            
             var result = mssql_script_tradeEntities.GetContext().Product.ToList();
-
             var search = txtSearch.Text.ToLower();
             if (cmbSorting.SelectedIndex == 1)
                 result = result.OrderBy(p => p.ProductCost).ToList();
@@ -94,27 +87,22 @@ namespace Rul.Pages
 
             if (cmbFilter.SelectedIndex == 1)
                 result = result.Where(p => p.ProductDiscountAmount >= 0 && p.ProductDiscountAmount < 10).ToList();
-            if (cmbFilter.SelectedIndex==2)
+            if (cmbFilter.SelectedIndex == 2)
                 result = result.Where(p => p.ProductDiscountAmount >= 10 && p.ProductDiscountAmount < 15).ToList();
-            if (cmbFilter.SelectedIndex==3)
+            if (cmbFilter.SelectedIndex == 3)
                 result = result.Where(p => p.ProductDiscountAmount >= 15).ToList();
 
 
             result = result.Where(p => p.ProductName.ToLower().Contains(txtSearch.Text.ToLower())).ToList();
-            LViewProduct.ItemsSource=result;
-
-            txtResultAmount.Text=result.Count().ToString();
-
-            // Сбрасываем ItemsSource для очистки кэша
-            LViewProduct.ItemsSource = null;
             LViewProduct.ItemsSource = result;
 
             txtResultAmount.Text = result.Count().ToString();
 
+
         }
 
 
-      
+
 
         private void cmbFilter_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
@@ -188,7 +176,7 @@ namespace Rul.Pages
             OrderWindow order = new OrderWindow(orderProducts, user);
             order.Show();
 
-            
+
             //{
             //    // Если заказ успешно оформлен
             //    orderProducts.Clear();
@@ -197,7 +185,32 @@ namespace Rul.Pages
             //}
 
 
-            
+
+        }
+
+        private void btnAddNewProduct_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddEditProductPage(null));
+        }
+
+        private void LViewProduct_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            NavigationService.Navigate(new AddEditProductPage(LViewProduct.SelectedItem as Product));
+        }
+
+        private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (Visibility ==Visibility.Visible)
+            {
+                mssql_script_tradeEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+                LViewProduct.ItemsSource = mssql_script_tradeEntities.GetContext().Product.ToList();
+            }
+        }
+
+        private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
