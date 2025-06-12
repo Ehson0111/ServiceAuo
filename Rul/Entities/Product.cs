@@ -53,20 +53,7 @@ namespace Rul.Entities
             }
         }
 
-        public string CostWithDiscount
-        {
-            get
-            {
-
-                if (this.MaxDiscountAmount > 0)
-                {
-                    var costWithDiscount = Convert.ToDouble(this.ProductCost) - Convert.ToDouble(this.ProductCost) * Convert.ToDouble(this.ProductDiscountAmount / 100.00);
-                }
-
-                return this.ProductCost.ToString();
-            }
-        }
-
+         
         public string ImgPath
         {
 

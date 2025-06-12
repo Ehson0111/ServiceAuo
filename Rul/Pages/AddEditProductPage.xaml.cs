@@ -47,124 +47,40 @@ namespace Rul.Pages
             "Аксессуары",
             "Автозапчасти",
             "Автосервис",
-            "Съемники подшипникиов",
+            "Съемники подшипников",
             "Ручные инструменты",
             "Зарядные устройства",
 
         };
 
-        //private void btnEnterImage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    OpenFileDialog GetImageDialog = new OpenFileDialog();
 
-        //    GetImageDialog.Filter = "Файлы изображений (*.png,*.jpg, *.jpeg)| *.png; *.jpg; *.jpeg";
-        //    GetImageDialog.InitialDirectory = "C:\\Users\\ekhso\\source\\repos\\Rul\\Rul\\Resources";
-
-        //    //}
-        //    if (GetImageDialog.ShowDialog() == true)
-        //    {
-        //        try
-        //        {
-        //            // Путь к папке Resources в проекте
-        //            string resourcesPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
-        //            if (!Directory.Exists(resourcesPath))
-        //            {
-        //                Directory.CreateDirectory(resourcesPath);
-        //            }
-
-        //            // Имя файла
-        //            string fileName = GetImageDialog.SafeFileName;
-        //            // Путь назначения в папке Resources
-        //            string destPath = System.IO.Path.Combine(resourcesPath, fileName);
-
-        //            // Копируем файл в папку Resources
-        //            File.Copy(GetImageDialog.FileName, destPath, true);
-
-        //            // Сохраняем только имя файла в ProductImage
-        //            product.ProductImage = fileName;
-
-        //            MessageBox.Show($"Изображение {fileName} успешно добавлено!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"Ошибка при копировании изображения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
-
-        //private void btnEnterImage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    OpenFileDialog openFileDialog = new OpenFileDialog();
-        //    openFileDialog.Filter = "Изображения (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
-
-        //    if (openFileDialog.ShowDialog() == true)
-        //    {
-        //        try
-        //        {
-        //            // 1. Определяем папку для хранения изображений
-        //            string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ProductImages");
-
-
-
-        //            // 3. Генерируем уникальное имя файла
-        //            string fileExtension = Path.GetExtension(openFileDialog.FileName);
-        //            string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-        //            string destinationPath = Path.Combine(imagesFolder, uniqueFileName);
-
-        //            // 4. Копируем файл
-        //            File.Copy(openFileDialog.FileName, destinationPath);
-
-        //            // 5. Сохраняем только имя файла в базу
-        //            product.ProductImage = uniqueFileName;
-
-        //            MessageBox.Show("Изображение успешно сохранено", "Успех",
-        //                          MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"Ошибка при сохранении изображения: {ex.Message}",
-        //                          "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
-
-        //private void btnEnterImage_Click(object sender, RoutedEventArgs e)
-        //{
-        //    OpenFileDialog openFileDialog = new OpenFileDialog();
-        //    openFileDialog.Filter = "Изображения (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
-
-        //    if (openFileDialog.ShowDialog() == true)
-        //    {
-        //        try
-        //        {
-        //            // 1. Определяем папку для хранения изображений
-        //            string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ProductImages");
-
-
-        //            // 3. Генерируем уникальное имя файла
-        //            string fileExtension = Path.GetExtension(openFileDialog.FileName);
-        //            string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-        //            string destinationPath = Path.Combine(imagesFolder, uniqueFileName);
-
-        //            // 4. Копируем файл
-        //            File.Copy(openFileDialog.FileName, destinationPath);
-
-        //            // 5. Сохраняем только имя файла в базу
-        //            product.ProductImage = uniqueFileName;
-
-        //            MessageBox.Show("Изображение успешно сохранено", "Успех",
-        //                          MessageBoxButton.OK, MessageBoxImage.Information);
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            MessageBox.Show($"Ошибка при сохранении изображения: {ex.Message}",
-        //                          "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        }
-        //    }
-        //}
         private void btnSaveProduct_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
+
+            //if (product.ProductCost < 0)
+            //    errors.AppendLine("Стоимость не может быть отрицательной!");
+            //if (product.MinCount < 0)
+            //    errors.AppendLine("Минимальное количество не может быть отрицательной!");
+            //if (product.ProductDiscountAmount > product.MaxDiscountAmount)
+            //    errors.AppendLine("Действующая скидка на товар не может быть более максимальной скидки!");
+
+            //if (errors.Length > 0)
+            //{
+            //    MessageBox.Show(errors.ToString());
+            //    return;
+            //}
+            //if (product.ProductArticleNumber != null)
+            //{
+            //    mssql_script_tradeEntities.GetContext().Product.Add(product);
+            //}
+            ////try
+            ////{
+
+            //mssql_script_tradeEntities.GetContext().SaveChanges();
+            //MessageBox.Show("Информация сохранена!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            //NavigationService.GoBack();
 
             if (product.ProductCost < 0)
                 errors.AppendLine("Стоимость не может быть отрицательной!");
@@ -177,27 +93,41 @@ namespace Rul.Pages
             {
                 MessageBox.Show(errors.ToString());
                 return;
-
-
             }
-            if (product.ProductArticleNumber == null)
-            {
-                mssql_script_tradeEntities.GetContext().Product.Add(product);
-            }
+
             try
             {
-
+                if (product.ProductArticleNumber != null)
+                {
+                    mssql_script_tradeEntities.GetContext().Product.Add(product);
+                }
                 mssql_script_tradeEntities.GetContext().SaveChanges();
                 MessageBox.Show("Информация сохранена!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-
                 NavigationService.GoBack();
-
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                StringBuilder validationErrors = new StringBuilder();
+                foreach (var validationError in ex.EntityValidationErrors)
+                {
+                    foreach (var error in validationError.ValidationErrors)
+                    {
+                        validationErrors.AppendLine($"Поле: {error.PropertyName}, Ошибка: {error.ErrorMessage}");
+                    }
+                }
+                MessageBox.Show($"Ошибка валидации:\n{validationErrors.ToString()}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString(), "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                //throw;
+                MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message.ToString(), "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    //throw;
+            //}
         }
 
         private void btnEnterImage_Click(object sender, RoutedEventArgs e)
@@ -212,7 +142,6 @@ namespace Rul.Pages
                     // 1. Определяем папку для хранения изображений
                     string imagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources");
 
-                    // 2. Создаем папку, если ее нет
               
                     string fileName = Path.GetFileName(openFileDialog.FileName);
                     string destinationPath = Path.Combine(imagesFolder, fileName);
@@ -234,17 +163,16 @@ namespace Rul.Pages
             }
         }
 
-        private mssql_script_tradeEntities db;
 
         private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
-            db=new mssql_script_tradeEntities();
             if (MessageBox.Show($"Вы действительно хотите удалить {product.ProductName}?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 try
-                {
-                    db.Product.Remove(product);
-                    db.SaveChanges();
+                { 
+
+                    mssql_script_tradeEntities.GetContext().Product.Remove(product);
+                    mssql_script_tradeEntities.GetContext().SaveChanges();
                     //mssql_script_tradeEntities.GetContext().SaveChanges();
                     MessageBox.Show("Запись удалена!", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
                     NavigationService.GoBack();
@@ -256,7 +184,6 @@ namespace Rul.Pages
                 }
 
             }
-
         }
 
         private void txtDiscount_TextChanged(object sender, TextChangedEventArgs e)

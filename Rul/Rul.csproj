@@ -117,6 +117,7 @@
       <DependentUpon>OrderTicketPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="services\CapthchaGenerator.cs" />
+    <Compile Include="services\DiscountToBackgroundConverter.cs" />
     <Compile Include="Windows\OrderWindow.xaml.cs">
       <DependentUpon>OrderWindow.xaml</DependentUpon>
     </Compile>

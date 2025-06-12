@@ -58,7 +58,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" Background="{Binding Backgroung}">
-                        <Grid>
+                        <Grid Background="{Binding Background}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="*"/>

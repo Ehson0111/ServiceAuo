@@ -27,40 +27,29 @@
             <StackPanel Grid.Column="1">
                 <TextBlock Text="Артикул:"/>
                 <TextBox  Name="txtArticle" Text="{Binding ProductArticleNumber}"/>
-
-
                 <TextBlock Text="Наименование:"/>
-                <TextBox  Name="txtTitle" Text="{Binding ProductName}"/>
-
+               <TextBox  Name="txtTitle" Text="{Binding ProductName}"/>
                 <TextBlock Text="Категория:"/>
                 <ComboBox  Name="cmbCategory" SelectedItem="{Binding ProductCategory}"/>
-
                 <TextBlock Text="Количество на складе:"/>
                 <TextBox  Name="txtCountInStock" Text="{Binding ProductQuantityInStock}"/>
-
-
                 <TextBlock Text="Единица измерения:"/>
                 <TextBox  Name="txtUnit" Text="{Binding Unit}"/>
-
                 <TextBlock Text="Количество в упаковке :"/>
                 <TextBox  Name="txtCountInPack" Text="{Binding CountlnPack}"/>
-
                 <TextBlock Text="Минимальное количество:"/>
                 <TextBox  Name="txtMinCount" Text="{Binding MinCount}"/>
-
                 <TextBlock Text="Поставщик:"/>
-                <TextBox  Name="txtSupplier" Text="{Binding Supplier}"/>
-
-
+               <TextBox  Name="txtSupplier" Text="{Binding Supplier}"/>
                 <TextBlock Text="Размер максимальной скидки:"/>
                 <TextBox  Name="txtMaxDiscountAmount" Text="{Binding MaxDiscountAmount}"/>
-
                 <TextBlock Text="Размер действующей скидки:"/>
                 <TextBox  Name="txtDiscount" Text="{Binding ProductDiscountAmount}" TextChanged="txtDiscount_TextChanged"/>
-
                 <TextBlock Text="Стоимость за единицу:"/>
-                <TextBox  Name="txtCost" Text="{Binding ProductCost}"/>
-
+                <TextBox  Name="txtCost" Text="{Binding ProductCost}"/>            
+                
+                <TextBlock Text="Мануфактура"/>
+                <TextBox Name="txtManufature" Text="{Binding ProductManufacturer}"/>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel >
                         <Image x:Name="img" Width="100" Source="{Binding ImgPath, FallbackValue={StaticResource defaultImage}}"/>
@@ -70,17 +59,11 @@
                         <TextBlock Text="Описание:"/>
                         <TextBox x:Name="txtDescription" Height="100" Width="300" TextWrapping="Wrap" Text="{Binding ProductDescription}"/>
                     </StackPanel>
-
                     <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                         <Button Name="btnDeleteProduct" Content="Удалить материал" Width="200" Visibility="Collapsed" Click="btnDeleteProduct_Click"/>
-
                         <Button x:Name="btnSaveProduct" Content="Сохранить" Width="200" Click="btnSaveProduct_Click"/>
                     </StackPanel>
                 </StackPanel>
-
-
-
-
             </StackPanel>
 
         </Grid>
