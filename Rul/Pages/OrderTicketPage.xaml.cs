@@ -50,7 +50,7 @@ namespace Rul.Pages
 
 
 
-            
+             
         }
 
         private void btnSaveDocument_Click(object sender, RoutedEventArgs e)

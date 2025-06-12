@@ -56,7 +56,7 @@
             <TextBlock Text="Клиент:"/>
             <TextBox x:Name="txtUser"/>
             <TextBlock Text="Итого:"/>
-            <TextBlock Text="{Binding Total,StringFormat='\{0} рублей'}"/>
+            <TextBlock Text="{Binding Total,StringFormat='\{0} рублей'}" x:Name="total1"/>
             <Button x:Name="btnOrderSave" Grid.Row="1" HorizontalAlignment="Center" Content="Оформить заказ" Width="200" Click="btnOrderSave_Click"/>
         </StackPanel>
     </Grid>

@@ -61,10 +61,16 @@ namespace Rul.Pages
             {
                 productList.Remove(lViewOrder.SelectedItem as Product);
 
+                update();
             }
         }
 
+        private void update() {
+            var total = productList.Sum(p => Convert.ToDouble(p.ProductCost) - Convert.ToDouble(p.ProductCost) * Convert.ToDouble(p.ProductDiscountAmount / 100.00));
+            total1.Text= total.ToString()+"рубль";
 
+            lViewOrder.Items.Refresh();
+        }
         //public string Total
         //{
         //    get
@@ -144,6 +150,16 @@ namespace Rul.Pages
                 MessageBox.Show(ex.Message.ToString());
                 //throw;
             }
+        }
+
+        private void lViewOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void lViewOrder_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
